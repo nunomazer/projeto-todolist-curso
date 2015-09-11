@@ -26,6 +26,11 @@ Tarefas pendentes
             {!! Form::submit('marcar realizada') !!}
             {!! Form::close() !!}
         </td>
+        <td>
+            <a href="{{ url('tarefa/excluir/'.$tarefa->id) }}">
+                excluir
+            </a>
+        </td>
     </tr>
 @endforeach
 </table>
