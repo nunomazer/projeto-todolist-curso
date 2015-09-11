@@ -48,7 +48,7 @@ return [
 
         'sqlite' => [
             'driver'   => 'sqlite',
-            'database' => env(storage('DB_DATABASE'), storage('projeto_curso_laravel.sqlite')),
+            'database' => env(storage_path('DB_DATABASE'), storage_path('projeto_curso_laravel.sqlite')),
             'prefix'   => '',
         ],
 

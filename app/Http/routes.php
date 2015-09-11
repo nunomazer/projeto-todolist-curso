@@ -11,6 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
+
+$router->get('/tarefa', 'TarefaController@listarPendentes');
+$router->get('tarefa/listar-realizadas', 'TarefaController@listarRealizadas');
+$router->get('tarefa/nova', 'TarefaController@nova');
+$router->get('tarefa/alterar/{id}', 'TarefaController@alterar');
+$router->match(['GET','POST'], 'tarefa/excluir/{id?}', 'TarefaController@excluir');
+$router->post('tarefa/salvar', 'TarefaController@salvar');
+$router->post('tarefa/realizar', 'TarefaController@realizar');
