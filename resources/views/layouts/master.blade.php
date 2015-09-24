@@ -3,16 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Tarefas</title>
-        <style>
-            .menu-h li {
-                display: inline;
-                list-style-type: none;
-                padding-right: 20px;
-            }
-            .footer {
-                font-size: 0.8em;
-            }
-        </style>
+        <link href="{!! asset('css/todolist.css') !!}" media="all" rel="stylesheet" type="text/css" />
     </head>
     <body>
         @section('menu')

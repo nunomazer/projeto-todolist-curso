@@ -1,0 +1,8 @@
+.menu-h li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 20px;
+}
+.footer {
+    font-size: 0.8em;
+}
