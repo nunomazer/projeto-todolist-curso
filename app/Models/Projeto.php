@@ -18,4 +18,7 @@ class Projeto extends Model {
         $this->attributes['data_prazo'] = $date_parts[2] . '-' . $date_parts[0] . '-' . $date_parts[1];
     }
 
+    public function tarefas() {
+        return $this->hasMany(Tarefa::class, 'projeto_id');
+    }
 }

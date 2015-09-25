@@ -8,12 +8,20 @@ Tarefas pendentes
 <table>
     <thead>
         <th>id</th>
+        <th>Projeto</th>
         <th>Título</th>
         <th>Criada em</th>
     </thead>
 @foreach ($tarefas as $tarefa)
     <tr>
         <td>{{ $tarefa->id }}</td>
+        <td>
+            @if(is_null($tarefa->projeto)==false)
+                <a href="{{url('projeto/'.$tarefa->projeto->id)}}">
+                    {{ $tarefa->projeto->titulo }}
+                </a>
+            @endif
+        </td>
         <td>{{ $tarefa->titulo }}</td>
         <td>{{ $tarefa->created_at }}</td>
         <td>

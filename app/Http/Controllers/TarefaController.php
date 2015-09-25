@@ -9,21 +9,22 @@ use Todolist\Models\Tarefa;
 
 class TarefaController extends Controller {
 
-// Carrega do modelo as tarefas pendentes e chama a visão principal
+    // Carrega do modelo as tarefas pendentes e chama a visão principal
     public function listarPendentes(Tarefa $tarefa) {
-        $data['tarefas'] = $tarefa->getPendentes();
+        $data['tarefas'] = $tarefa->pendentes()->with('projeto')->get();
         return view('tarefas.pendentes', $data);
     }
 
     // Carrega do modelo as tarefas realizadas e chama a visão de tarefas realizadas
     public function listarRealizadas(Tarefa $tarefa) {
-        $data['tarefas'] = $tarefa->getRealizadas();
+        $data['tarefas'] = $tarefa->realizadas()->with('projeto')->get();
         return view('tarefas.realizadas', $data);
     }
 
     // Apenas monta a visão do formulário de nova tarefa
     public function nova() {
-        return view('tarefas.nova');
+        $data['projetos'] = \Todolist\Models\Projeto::lists('titulo', 'id');
+        return view('tarefas.nova', $data);
     }
 
     // Encontra a tarefa para alterar e monta a visão do formulário de alterar tarefa
@@ -35,6 +36,7 @@ class TarefaController extends Controller {
             // se o resultado da pesquisa pelo id não for 
             //nulo, retorna a view
             // com o form de alteração
+            $data['projetos'] = \Todolist\Models\Projeto::lists('titulo', 'id');
             $data['tarefa'] = $tarefa;
             return view('tarefas.alterar', $data);
         } else {

@@ -63,7 +63,8 @@ class ProjetoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        // Implementaremos esta função na sequência
+        $data['projeto'] = $this->findOrError($id);
+        return view('projetos.show', $data);
     }
 
     /**

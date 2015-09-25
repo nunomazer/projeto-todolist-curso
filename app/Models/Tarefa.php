@@ -9,13 +9,17 @@ class Tarefa extends Model {
     protected $table = "tarefa";
     // Apenas o campo título podera ser inserido por mass insert
     // os demais manipularemos por demanda de ação
-    protected $fillable = array('titulo');
+    protected $fillable = ['titulo', 'projeto_id'];
 
-    public function getPendentes() {
-        return $this->query()->where('realizada', '=', false)->get();
+    public function scopePendentes($query) {
+        return $query->where('realizada', '=', false);
     }
     
-    function getRealizadas() {
-        return $this->query()->where('realizada', '=', true)->get();
+    public function scopeRealizadas($query) {
+        return $query->where('realizada', '=', true);
+    }
+    
+    public function projeto() {
+        return $this->belongsTo(Projeto::class, 'projeto_id');
     }
 }
