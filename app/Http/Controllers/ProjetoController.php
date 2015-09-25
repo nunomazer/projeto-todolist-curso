@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Todolist\Http\Requests;
 use Todolist\Http\Controllers\Controller;
 use Todolist\Models\Projeto;
+use Illuminate\Http\Exception\HttpResponseException;
 
 class ProjetoController extends Controller {
 
@@ -95,7 +96,7 @@ class ProjetoController extends Controller {
             'data_prazo' => 'required|date_format:d/m/Y',
         ]);
         $p = $this->findOrError($id);
-        $p->fill($r->input());
+        $p->fill($request->input());
         $p->save();
         return redirect('projeto')->with('mensagem-sucesso', 'Projeto ' . $id . ' atualizado com sucesso !!');
     }
