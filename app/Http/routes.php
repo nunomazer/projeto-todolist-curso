@@ -13,6 +13,7 @@
 
 Route::get('/', 'HomeController@index');
 
+Route::get('projeto/{id}/excluir', 'ProjetoController@excluir');
 Route::resource('/projeto', 'ProjetoController');
 Route::controller('/tag/{id?}', 'TagController');
 

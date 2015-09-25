@@ -1,4 +1,5 @@
 @extends('layouts.master')
+@include('tarefas.submenu')
 @section('conteudo')
 <h2>
 Tarefas pendentes
