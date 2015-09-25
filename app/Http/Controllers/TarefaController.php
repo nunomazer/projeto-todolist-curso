@@ -93,7 +93,19 @@ class TarefaController extends Controller {
     // o parâmetro id é opcional pois somente é passado
     // quando o request é feito por GET
     public function excluir(Request $request, Tarefa $tarefa, $id = null) {
-        
+        // se o request enviou um parâmetro confirmaExclusao e 
+        // o valor é sim destrói o modelo no banco de dados
+        if ($request->has('confirmaExclusao')) {
+            if ($request->get('confirmaExclusao') == 'Confirmar') {
+                $tarefa->destroy(array($request->get('id')));
+            }
+            // volta para listagem de pendentes
+            return redirect(url('tarefa'));
+        } else {
+            // se não existe um parâmetro confirmaExclusao, 
+            // mostra a visão com a pergunta de confirmação
+            $data['tarefa'] = $tarefa->find($id);
+            return view('tarefas.excluir', $data);
+        }       
     }
-
 }
