@@ -1,9 +1,5 @@
 @extends('layouts.master')
 
-@section('menu')
-<a href='tarefa'>Tarefa</a>
-@stop
-
 @section('conteudo')
 <h2>
 Sistema de exemplo Laravel
@@ -14,6 +10,9 @@ Sistema de exemplo Laravel
     analise o código para compreender
     as estruturas básicas do framework Laravel 5.1, 
     e como utilizá-las para atingir
-    os objetivos de desenvolvimento de sistemas baseados em CRUD-L
+    os objetivos de desenvolvimento de sistemas baseados em CRUD-L,
+    demonstrando relacionamentos entre tabelas usando Eloquent e algumas
+    construções do Query Builder, dentre outras funcionalidades auxiliares
+    para o desenvolvimento de um sistema.
 </p>
 @stop
