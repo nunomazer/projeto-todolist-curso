@@ -13,10 +13,13 @@
 
 Route::get('/', 'HomeController@index');
 
-$router->get('/tarefa', 'TarefaController@listarPendentes');
-$router->get('tarefa/listar-realizadas', 'TarefaController@listarRealizadas');
-$router->get('tarefa/nova', 'TarefaController@nova');
-$router->get('tarefa/alterar/{id}', 'TarefaController@alterar');
-$router->match(['GET','POST'], 'tarefa/excluir/{id?}', 'TarefaController@excluir');
-$router->post('tarefa/salvar', 'TarefaController@salvar');
-$router->post('tarefa/realizar', 'TarefaController@realizar');
+Route::resource('/projeto', 'ProjetoController');
+Route::controller('/tag/{id?}', 'TagController');
+
+Route::get('/tarefa', 'TarefaController@listarPendentes');
+Route::get('tarefa/listar-realizadas', 'TarefaController@listarRealizadas');
+Route::get('tarefa/nova', 'TarefaController@nova');
+Route::get('tarefa/alterar/{id}', 'TarefaController@alterar');
+Route::match(['GET','POST'], 'tarefa/excluir/{id?}', 'TarefaController@excluir');
+Route::post('tarefa/salvar', 'TarefaController@salvar');
+Route::post('tarefa/realizar', 'TarefaController@realizar');
