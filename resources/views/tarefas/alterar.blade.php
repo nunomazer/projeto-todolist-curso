@@ -8,6 +8,10 @@ Alterar tarefa {{$tarefa->id}}
 a visão, desta maneira os dados são associados diretamente -->
 {!! Form::model($tarefa, array('url' => array('tarefa/salvar'))) !!}
 <p>
+    {!! Form::label('projeto_id', 'Projeto') !!}<br/>
+    {!! Form::select('projeto_id', $projetos) !!}<br/>
+</p>
+<p>
     {!! Form::label('titulo', 'Título') !!}<br/>
     {!! Form::textarea('titulo') !!}<br/>
     {!! Form::hidden('id') !!}<br/>
