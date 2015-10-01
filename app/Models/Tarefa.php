@@ -22,4 +22,15 @@ class Tarefa extends Model {
     public function projeto() {
         return $this->belongsTo(Projeto::class, 'projeto_id');
     }
+    
+    public function tags() {
+        /**
+         * Parâmetros: <br/>
+         * Nome da classe modelo com a qual esta se relaciona <br/>
+         * Nome da tabela que faz o relacionamento <br/>
+         * Nome da chave estrangeira desta classe (Tarefa) na tabela de relacionamento <br/>
+         * Nome da chave estrangeira da 'outra' classe (Tag) na tabela de relacionamento <br/>
+         */        
+        return $this->belongsToMany(Tag::class, 'tarefatag', 'tarefa_id', 'tag_id');
+    }
 }
