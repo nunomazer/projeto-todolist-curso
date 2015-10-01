@@ -16,7 +16,11 @@ Projetos
 @foreach ($projetos as $p)
     <tr>
         <td>{{ $p->id }}</td>
-        <td>{{ $p->titulo }}</td>
+        <td>
+            <a href="{{url('projeto/'.$p->id)}}">
+                {{ $p->titulo }}
+            </a>
+        </td>
         <td>{{ $p->data_prazo}}</td>
         <td><a href="{{url('projeto/'.$p->id.'/edit')}}">Editar</a></td>
     </tr>
