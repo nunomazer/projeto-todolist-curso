@@ -23,6 +23,12 @@ class Tarefa extends Model {
         return $this->belongsTo(Projeto::class, 'projeto_id');
     }
     
+    /**
+     * Retorna as tags associadas a uma tarefa, usando um relacionamento n-n
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+
     public function tags() {
         /**
          * Parâmetros: <br/>
