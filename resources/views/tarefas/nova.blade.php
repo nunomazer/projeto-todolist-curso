@@ -13,6 +13,12 @@ Nova tarefa
 <p>
     {!! Form::label('titulo', 'Título') !!}<br/>
     {!! Form::textarea('titulo') !!}<br/>
+</p>
+<p>
+    {!! Form::label('tags', 'Tags') !!}<br/>
+    {!! Form::text('tags') !!}<br/>
+</p>
+<p>
     {!! Form::submit('Enviar') !!}
 </p>
 {!! Form::close() !!}

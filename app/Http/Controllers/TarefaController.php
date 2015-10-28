@@ -49,7 +49,11 @@ class TarefaController extends Controller {
     // Salva os dados da tarefa enviados por POST, veja em routes.php
     // Recebe do framework (injeção de dependência) os objetos necessários
     public function salvar(Request $request, Tarefa $tarefa) {
-// verifica se existe o parâmetro id, somente existe quando 
+        $this->validate($request, [
+            'titulo' => 'required',
+        ]);
+        
+        // verifica se existe o parâmetro id, somente existe quando 
         // é para alteração, senão deverá ser criado um novo registro/modelo
         if ($request->has('id')) {
             $tarefa = $tarefa->find($request->get('id'));
