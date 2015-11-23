@@ -1,15 +1,15 @@
 @extends('layouts.master')
 @include('projetos.submenu')
 @section('conteudo')
-<h2>
+<h2 class="page-header">
 Projetos
 </h2>
 
 @include('layouts.mensagens')
 
-<h3>Projeto {{$projeto->titulo}}</h3>
+<h3 class="alert alert-info">{{$projeto->titulo}}</h3>
 
-<table>
+<table class="table table-responsive">
     <caption>
         Tarefas
     </caption>

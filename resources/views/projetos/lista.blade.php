@@ -1,13 +1,13 @@
 @extends('layouts.master')
 @include('projetos.submenu')
 @section('conteudo')
-<h2>
+<h2 class="page-header">
 Projetos
 </h2>
 
 @include('layouts.mensagens')
 
-<table>
+<table class="table table-hover table-striped table-responsive">
     <thead>
         <th>id</th>
         <th>Título</th>
@@ -22,7 +22,11 @@ Projetos
             </a>
         </td>
         <td>{{ $p->data_prazo}}</td>
-        <td><a href="{{url('projeto/'.$p->id.'/edit')}}">Editar</a></td>
+        <td>
+            <a href="{{url('projeto/'.$p->id.'/edit')}}" class="btn btn-sm btn-primary">
+                Editar
+            </a>
+        </td>
     </tr>
 @endforeach
 </table>
