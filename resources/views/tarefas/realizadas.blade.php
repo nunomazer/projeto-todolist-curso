@@ -10,6 +10,7 @@ Tarefas realizadas
         <th>id</th>
         <th>Projeto</th>
         <th>Título</th>
+        <th>Tags</th>
         <th>Atualizada em</th>
     </thead>
 @foreach ($tarefas as $tarefa)
@@ -23,6 +24,11 @@ Tarefas realizadas
             @endif
         </td>
         <td>{{ $tarefa->titulo }}</td>
+        <td>            
+            @foreach ($tarefa->tags as $tag)
+                {{$tag->tag}} - 
+            @endforeach
+        </td>
         <td>{{ $tarefa->updated_at }}</td>
     </tr>
 @endforeach
