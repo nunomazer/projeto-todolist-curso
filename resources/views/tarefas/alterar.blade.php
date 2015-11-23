@@ -15,6 +15,9 @@ a visão, desta maneira os dados são associados diretamente -->
     {!! Form::label('titulo', 'Título') !!}<br/>
     {!! Form::textarea('titulo') !!}<br/>
     {!! Form::hidden('id') !!}<br/>
+    {!! Form::label('tags', 'Tags') !!}<br/>
+    {!! Form::text('tags', $tags) !!}<br/>
+</p>
     {!! Form::submit('Enviar') !!}
 </p>
 {!! Form::close() !!}

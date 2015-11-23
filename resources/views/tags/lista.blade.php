@@ -14,7 +14,7 @@ Tags
 @foreach ($tags as $tag)
     <tr>
         <td>{{ $tag->id }}</td>
-        <td>{{ $tag->titulo }}</td>
+        <td>{{ $tag->tag }}</td>
         <td>{{ $tag->created_at }}</td>
     </tr>
 @endforeach

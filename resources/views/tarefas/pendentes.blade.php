@@ -10,6 +10,7 @@ Tarefas pendentes
         <th>id</th>
         <th>Projeto</th>
         <th>Título</th>
+        <th>Tags</th>        
         <th>Criada em</th>
     </thead>
 @foreach ($tarefas as $tarefa)
@@ -23,6 +24,11 @@ Tarefas pendentes
             @endif
         </td>
         <td>{{ $tarefa->titulo }}</td>
+        <td>            
+            @foreach ($tarefa->tags as $tag)
+                {{$tag->tag}} - 
+            @endforeach
+        </td>
         <td>{{ $tarefa->created_at }}</td>
         <td>
             <a href="{{ url('tarefa/alterar/'.$tarefa->id) }}">
@@ -34,6 +40,11 @@ Tarefas pendentes
             {!! Form::hidden('id', $tarefa->id) !!}
             {!! Form::submit('marcar realizada') !!}
             {!! Form::close() !!}
+        </td>
+        <td>
+            <a href="{{ url('tarefa/excluir/'.$tarefa->id) }}">
+                excluir
+            </a>
         </td>
     </tr>
 @endforeach
