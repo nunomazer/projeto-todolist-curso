@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Todolist\Http\Requests;
 use Todolist\Http\Controllers\Controller;
 use Todolist\Models\Tarefa;
+use Todolist\Models\Tag;
 
 class TarefaController extends Controller {
 
@@ -38,10 +39,16 @@ class TarefaController extends Controller {
             // com o form de alteração
             $data['projetos'] = \Todolist\Models\Projeto::lists('titulo', 'id');
             $data['tarefa'] = $tarefa;
+            
+            // adicionamos a string com a lista de tags para ser mostrada no form de alteração
+            // com implode puxamo somente o campo tag e transformamos em uma string
+            $data['tags'] = $tarefa->tags()->get()->implode('tag', ', ');
+
             return view('tarefas.alterar', $data);
         } else {
-            // se fornulo o resultado, redireciona 
+            // se for nulo o resultado, redireciona 
             // para as tarefas pendentes
+            
             return redirect(url('tarefa'));
         }
     }
@@ -52,26 +59,36 @@ class TarefaController extends Controller {
         $this->validate($request, [
             'titulo' => 'required',
         ]);
-        
+
         // verifica se existe o parâmetro id, somente existe quando 
         // é para alteração, senão deverá ser criado um novo registro/modelo
         if ($request->has('id')) {
             $tarefa = $tarefa->find($request->get('id'));
-            
+
             if ($tarefa != null) {
                 // se encontrou o id da tarefa, altera
                 $tarefa->update($request->all());
-                
+
                 return redirect('tarefa');
             }
         }
-        
+
 
         // se chegar neste ponto é por que não realizou o return na alteração
-        // então
-        // Cria um novo registro no banco de dados com os parâmetros
-        // preenchidos no form e enviados pelo Request
-        $tarefa->create($request->all());
+        // então cria um novo registro no banco de dados com os parâmetros
+        // preenchidos no form e enviados pelo Request.
+        // A função create retorna o objeto populado com seu novo ID, que servirá para 
+        // associarmos as tags a ele
+        $tarefa = $tarefa->create($request->all());
+
+
+        // Se o formulário enviar tags para associar à tarefa
+        // passamos estes dados maiso id da nova tarefa para uma função
+        // criada neste controlador, assim poderemos reusar a lógica para a 
+        // alteraçõ de tarefas
+        if ($request->has('tags')) {
+            $this->associarTags($tarefa, $request->get('tags'));
+        }
 
         // Monta a resposta com redirecionamento para a página principal de tarefas
         return redirect('tarefa');
@@ -112,6 +129,45 @@ class TarefaController extends Controller {
             // mostra a visão com a pergunta de confirmação
             $data['tarefa'] = $tarefa->find($id);
             return view('tarefas.excluir', $data);
-        }       
+        }
     }
+
+    private function associarTags(Tarefa $tarefa, $tags) {
+        // explodir o string de tags em um array
+        // primeiro tiramos os espaços da string e forçamos que fiquem minúsculas
+        $tags = str_replace(' ', '', $tags);
+        $tags = strtolower($tags);
+        $tags = explode(',', $tags);
+
+        // verificar se tag existe
+        foreach ($tags as $tag) {
+            // este método procura por um registro relacionado aos atributos
+            // passados pelo array, caso não encontre cria um novo registro 
+            // no banco
+            $tag = Tag::firstOrCreate(['tag' => $tag]);
+        }
+
+        // Esta não é a melhor estratégia neste ponto, pois poderíamos
+        // criar um array auxiliar dentro do foreach para pegar os
+        // ids criados, mas vamos usar o método abaixo para
+        // exemplificar as funcionalidades do framework
+        
+
+        // o médoto wherein busca todos os registros existentes em 
+        // um array, o que nos retorna todas as tags que precisamos associar 
+        // à tarefa. 
+        // Coolect cria uma nova coleção, pois estamos tranformando uma colção de objetos eloquent em array, 
+        // pegamos este array e transformamos em nova coleção para o método flatten transformar uma coleção multidimensional em simples dimensão
+        // assim temos um array com os ids desejados
+        $tagsIds = collect(
+                Tag::whereIn('tag', $tags)->get(['id'])->toArray()
+                )->flatten()->all();
+        
+        
+        // após ter a lista com os ids, basta utilizar o método de "anexar" 
+        // relacionamentos à uma tabela. Conseguimos isso pois relacionamos as 
+        // tags com belongsToMany tanto no modelo de Tarefas quanto de Tags.        
+        $tarefa->tags()->attach($tagsIds);
+    }
+
 }
