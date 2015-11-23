@@ -69,6 +69,10 @@ class TarefaController extends Controller {
                 // se encontrou o id da tarefa, altera
                 $tarefa->update($request->all());
 
+                if ($request->has('tags')) {
+                    $this->associarTags($tarefa, $request->get('tags'));
+                }
+
                 return redirect('tarefa');
             }
         }
@@ -160,13 +164,20 @@ class TarefaController extends Controller {
         // pegamos este array e transformamos em nova coleção para o método flatten transformar uma coleção multidimensional em simples dimensão
         // assim temos um array com os ids desejados
         $tagsIds = collect(
-                Tag::whereIn('tag', $tags)->get(['id'])->toArray()
+                    Tag::whereIn('tag', $tags)->get(['id'])->toArray()
                 )->flatten()->all();
         
         
         // após ter a lista com os ids, basta utilizar o método de "anexar" 
         // relacionamentos à uma tabela. Conseguimos isso pois relacionamos as 
         // tags com belongsToMany tanto no modelo de Tarefas quanto de Tags.        
+        // Porém, se estamos alterando o uma tarefa, o ideal é desassociar todas as
+        // tags anteriores à alteração e associar novamente as que estamos recebendo
+        // pelo request, assim garantimos que somente as possíveis alterações são persistidas.
+        // Par isso, antes de "anexar", "desanexamos" as tags no relacionamento usando detach
+        // sem passar parâmetros, todas as associações muitos-muitos de tags para uma tarefa 
+        // serão excluídas
+        $tarefa->tags()->detach();
         $tarefa->tags()->attach($tagsIds);
     }
 
