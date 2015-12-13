@@ -6,6 +6,10 @@ Sistema de exemplo Laravel
 </h2>
 
 <p>
+	{{ trans('mytexts.welcome') }}
+</p>
+
+<p>
     Leia os comentários no código deste sistema e 
     analise o código para compreender
     as estruturas básicas do framework Laravel 5.1, 
