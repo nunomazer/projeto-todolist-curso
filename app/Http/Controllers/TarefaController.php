@@ -12,13 +12,13 @@ class TarefaController extends Controller {
 
     // Carrega do modelo as tarefas pendentes e chama a visão principal
     public function listarPendentes(Tarefa $tarefa) {
-        $data['tarefas'] = $tarefa->pendentes()->with('projeto')->get();
+        $data['tarefas'] = $tarefa->pendentes()->with('projeto')->paginate(5);
         return view('tarefas.pendentes', $data);
     }
 
     // Carrega do modelo as tarefas realizadas e chama a visão de tarefas realizadas
     public function listarRealizadas(Tarefa $tarefa) {
-        $data['tarefas'] = $tarefa->realizadas()->with('projeto')->get();
+        $data['tarefas'] = $tarefa->realizadas()->with('projeto')->paginate(5);
         return view('tarefas.realizadas', $data);
     }
 

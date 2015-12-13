@@ -5,7 +5,7 @@
 Tarefas pendentes
 </h2>
 
-<table>
+<table class="table">
     <thead>
         <th>id</th>
         <th>Projeto</th>
@@ -49,5 +49,7 @@ Tarefas pendentes
     </tr>
 @endforeach
 </table>
+
+{!! $tarefas->render() !!}
 
 @stop

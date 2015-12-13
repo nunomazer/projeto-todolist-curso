@@ -5,7 +5,7 @@
 Tarefas realizadas
 </h2>
 
-<table>
+<table class="table">
     <thead>
         <th>id</th>
         <th>Projeto</th>
@@ -33,5 +33,7 @@ Tarefas realizadas
     </tr>
 @endforeach
 </table>
+
+{!! $tarefas->render() !!}
 
 @stop
